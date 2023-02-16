@@ -1,0 +1,21 @@
+{
+  "name": "todov2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GRagavi/todoV2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GRagavi/todoV2/issues"
+  },
+  "homepage": "https://github.com/GRagavi/todoV2#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.30.0"
+  }
+}
