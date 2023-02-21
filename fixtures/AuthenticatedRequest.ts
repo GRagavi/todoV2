@@ -1,6 +1,7 @@
 import { APIRequestContext } from "playwright-core";
 const getHash = (username:string,password:string)=>Buffer.from(`${username}:${password}`).toString('base64')
 
+
 export class AuthenticatedRequest{
     constructor(public request:APIRequestContext, public username:string, public password:string){}
     async post<T>(url:string,body:T){
@@ -51,6 +52,7 @@ export class AuthenticatedRequest{
             }
         })
     }
+
     Body = {username:this.username,Pwd: this.password}
     async createUser<T>(url:string){
         return await this.request.post(url,{
