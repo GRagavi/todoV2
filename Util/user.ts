@@ -14,4 +14,3 @@
 
 // export async function deleteUser(authenticatedRequest:AuthenticatedRequest){
 //     const resp = await authenticatedRequest.delete('/v2/user')
-//     return {status: resp.status()}

@@ -16,7 +16,7 @@ export const TODOTITLE = {
     UPDATE_ONLYSTATUS_WITH_PUT:"Updation of only status should give 400 via put endpoint",
     UPDATE_INVALID_ID_PATCH:"Updation of non existing todo should give 404 via patch endpoint",
     UPDATE_INVALID_ID_PUT:"Updation of non existing todo should give 400 via put endpoint"
-
+}
 export type RESPONSEBODY = [
     {id: number,
     title: string,
