@@ -5,7 +5,17 @@ export const TODOTITLE = {
     CREATE_TODO_WITH_INVALID_STATUS:"Creation of Todo should give 400 when status value is not either ACTIVE or DONE",
     DELETETODO:"Deletion of todo should work if todo exists",
 
-}
+    UPDATE_TITLE_WITH_PATCH:"Updating only title of todo via patch endpoint should work",
+    UPDATE_ONLYSTATUS_WITH_PATCH:"Updating only status of todo via patch endpoint should work",
+    UPDATE_INVALIDSTATUS_WITH_PATCH:"Updation of status todo should give 400 when status is not either of ACTIVE or DONE",
+    UPDATE_TITLE_STATUS_WITH_PATCH:"Updating both title and status of todo via patch endpoint should work",
+    UPDATE_TITLE_INAVLIDSTATUS_WITH_PATCH:"Updation of both title and status of todo should give 400 when status is not either of ACTIVE or DONE in patch",
+    UPDATE_TITLE_STATUS_WITH_PUT:"Updation of both status and title should work via put endpoint",
+    UPDATE_TITLE_INAVLIDSTATUS_WITH_PUT:"Updation of both title and status of todo should give 400 when status is not either of ACTIVE or DONE in PUT",
+    UPDATE_TITLE_WITH_PUT:"Updation of only title should give 400 via put endpoint",
+    UPDATE_ONLYSTATUS_WITH_PUT:"Updation of only status should give 400 via put endpoint",
+    UPDATE_INVALID_ID_PATCH:"Updation of non existing todo should give 404 via patch endpoint",
+    UPDATE_INVALID_ID_PUT:"Updation of non existing todo should give 400 via put endpoint"
 
 export type RESPONSEBODY = [
     {id: number,
