@@ -1,6 +1,8 @@
-import { test } from "../../fixtures/User.fixture";
+import { randomUUID } from "crypto";
+import { test } from "../fixtures/User.fixture";
 import { TODOTITLE } from "./Const";
 import { expect } from "@playwright/test";
+import { getHash } from "../fixtures/AuthenticatedRequest";
 
 test.describe("Update TestCases",()=>{
 
@@ -83,9 +85,61 @@ test.describe("Update TestCases",()=>{
     
     test(TODOTITLE.UPDATE_INVALID_ID_PATCH,async ({authenticatedRequest},testInfo)=>{
         const Id = 0
-        const resp = await authenticatedRequest.patch(`/v2/todo/${Id}`,{title:'updated status only by GR with put endpoint',status:'Active'})
+        const resp = await authenticatedRequest.patch(`/v2/todo/${Id}`,{title:'updated status only by GR with patch endpoint',status:'Active'})
         console.log(await resp.json())
         test.expect(resp.status()).toBe(400)
+    })
+
+    test(TODOTITLE.UPDATE_WITHOUT_AUTHORIZATION_PATCH,async ({authenticatedRequest,request},testInfo)=>{
+        const Id = testInfo['id']
+        const resp = await request.patch(`/v2/todo/${Id}`,{
+            data:{title:'update without Auth using patch endpoint',status:'Active'},
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        expect(resp.status()).toBe(401)
+    })
+    
+
+    test(TODOTITLE.UPDATE_WITHOUT_AUTHORIZATION_PUT,async ({authenticatedRequest,request},testInfo)=>{
+        const Id = testInfo['id']
+        const unique = randomUUID()
+        const resp = await request.put(`/v2/todo/${Id}`,{
+            data:{title:'update without Auth using put endpoint',status:'Active'},
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        expect(resp.status()).toBe(401)
+    })
+
+    test(TODOTITLE.UPDATE_ONE_BYANOTHER_PATCH,async ({authenticatedRequest,request},testInfo)=>{
+        const Id = testInfo['id']
+        const unique = randomUUID()
+        const resp = await request.put(`/v2/todo/${Id}`,{
+            data:{title:'update without Auth using put endpoint',status:'Active'},
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':`Basic ${getHash(unique,unique)}`
+            }
+        })
+        expect(resp.status()).toBe(401)
+        console.log(await resp.json())
+    })
+
+    test(TODOTITLE.UPDATE_ONE_BYANOTHER_PUT,async ({authenticatedRequest,request},testInfo)=>{
+        const Id = testInfo['id']
+        const unique = randomUUID()
+        const resp = await request.put(`/v2/todo/${Id}`,{
+            data:{title:'update without Auth using put endpoint',status:'Active'},
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':`Basic ${getHash(unique,unique)}`
+            }
+        })
+        expect(resp.status()).toBe(401)
+        console.log(await resp.json())
     })
 
     test.afterEach(async({authenticatedRequest},testInfo)=>{

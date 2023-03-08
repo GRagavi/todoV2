@@ -1,7 +1,7 @@
-import {expect} from '@playwright/test'
-import {test} from '../../fixtures/User.fixture'
+import {expect,request} from '@playwright/test'
+import {test} from '../fixtures/User.fixture'
 
-import { INVALIDCODE, INVALIDDATA, JSONPARSEError, STATUS, SUCCESSCODE, TODOTITLE, UNDEFINED, URL } from './Const'
+import { INVALIDCODE, INVALIDDATA, JSONPARSEError, STATUS, SUCCESSCODE, TODOTITLE, UNDEFINED, URL ,UNAUTHORIZED} from './Const'
 
 test.describe("Create Todo_PositiveCases",()=>{
 
@@ -55,6 +55,12 @@ test.describe("create_NegativeCases",()=>{
          const getResp = await authenticatedRequest.get(URL)
          console.log(await getResp.json())
          testInfo['id'] = body.id
+     })
+
+     test(TODOTITLE.CREATE_TODO_WITH_UNAUTHORIZED_ACCESS,async({request},testInfo)=>{    
+        const postResp = await request.post(URL)
+        const body = await postResp.json()
+         expect(postResp.status()).toBe(UNAUTHORIZED)
      })
 
 })

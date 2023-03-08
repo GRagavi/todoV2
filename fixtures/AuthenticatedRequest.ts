@@ -1,6 +1,7 @@
+import { randomUUID } from "crypto";
 import { APIRequestContext } from "playwright-core";
-const getHash = (username:string,password:string)=>Buffer.from(`${username}:${password}`).toString('base64')
-
+export const getHash = (username:string,password:string)=>Buffer.from(`${username}:${password}`).toString('base64')
+export const unique = randomUUID()
 
 export class AuthenticatedRequest{
     constructor(public request:APIRequestContext, public username:string, public password:string){}
@@ -10,8 +11,7 @@ export class AuthenticatedRequest{
             headers:{
                 'Content-Type':'application/json',
                 'Authorization': `Basic ${getHash(this.username,this.password)}`
-            }
-        })
+        }})
       
     }
 
@@ -25,6 +25,15 @@ export class AuthenticatedRequest{
     }
 
     async get<T>(url:string){
+        return await this.request.get(url,{
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization': `Basic ${getHash(this.username,this.password)}`
+            }
+        })
+    }
+
+    async getAll<T>(url:string){
         return await this.request.get(url,{
             headers:{
                 'Content-Type':'application/json',
@@ -63,13 +72,11 @@ export class AuthenticatedRequest{
         })
     }
 
-    // async deleteUser<T>(url:string)}{
-    //     return await this.request.post(url,{
-    //         headers:{
-    //             'Content-Type':'application/json'
-    //         }
-    //     })
-    // }
+      async deleteMe(){
+        console.log('Deleting user')
+        return await this.delete('/v2/user')
+    }
+
 }
 
 

@@ -18,6 +18,7 @@ export const test = base.extend<{authenticatedRequest:AuthenticatedRequest}>({
         const ar = new AuthenticatedRequest(request,"Ragavi","Password")
         ar.createUser("/v2/user")
         console.log("User Created")
-        use(ar)
+        await use(ar)
+        
     }
 })
